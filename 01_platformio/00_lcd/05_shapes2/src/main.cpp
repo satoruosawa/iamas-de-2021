@@ -1,18 +1,15 @@
 #include <M5Stack.h>
 
-int x = 0;
-int y = 0;
+bool flag = false;
 
 void setup() { M5.begin(); }
 
 void loop() {
-  M5.Lcd.fillRect(x, y, 18, 18, WHITE);
-
-  x = x + 20;
-  if (x >= 320) {
-    x = 0;
-    y = y + 20;
+  if (flag) {
+    M5.Lcd.fillRect(90, 50, 140, 140, BLUE);
+  } else {
+    M5.Lcd.fillRect(90, 50, 140, 140, RED);
   }
-
-  delay(100);
+  flag = !flag;
+  delay(1000);
 }

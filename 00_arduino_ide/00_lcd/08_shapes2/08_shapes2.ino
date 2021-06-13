@@ -1,6 +1,6 @@
 #include <M5Stack.h>
 
-bool flag = false;
+bool flag = true;
 
 void setup() { M5.begin(); }
 

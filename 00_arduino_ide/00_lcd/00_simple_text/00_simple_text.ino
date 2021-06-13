@@ -5,8 +5,8 @@ void setup() {
 
   M5.begin();  // M5Stackライブラリの初期化
 
-  M5.Lcd.setTextSize(2);           // テキストのサイズを指定
-  M5.Lcd.setCursor(0, 10);         // カーソルの位置を指定
+  M5.Lcd.setTextSize(2);  // テキストのサイズを指定、初期値は1
+  M5.Lcd.setCursor(0, 10);  // カーソルの位置(x,y)を指定、初期値は(0,0)
   M5.Lcd.println("Hello world.");  // 文字列を表示
 }
 

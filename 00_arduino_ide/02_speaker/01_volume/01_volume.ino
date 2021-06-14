@@ -12,7 +12,7 @@ void loop() {
   if (M5.BtnA.wasPressed()) {
     volume--;
     volume = max(volume, 0);  // ボリュームが-1以下にならないようにする
-    M5.Speaker.setVolume(volume);  // スピーカーのボリュームを設定
+    M5.Speaker.setVolume(volume);  // スピーカーのボリュームを設定 範囲は 0 ~ 10
   }
   if (M5.BtnB.wasPressed()) {
     M5.Speaker.tone(3520, 20);

@@ -15,7 +15,7 @@ void loop() {
     M5.Speaker.setVolume(volume);  // スピーカーのボリュームを設定 範囲は 0 ~ 10
   }
   if (M5.BtnB.wasPressed()) {
-    M5.Speaker.tone(3520, 20);
+    M5.Speaker.tone(3520, 40);
   }
   if (M5.BtnC.wasPressed()) {
     volume++;
@@ -23,7 +23,7 @@ void loop() {
     M5.Speaker.setVolume(volume);  // スピーカーのボリュームを設定
   }
 
-  M5.Lcd.setCursor(100, 100);
+  M5.Lcd.setCursor(70, 100);
   M5.Lcd.setTextSize(3);
   M5.Lcd.print("Volume = ");
   M5.Lcd.print(volume);

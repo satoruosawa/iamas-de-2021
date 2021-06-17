@@ -20,7 +20,7 @@ void setup() {
   GYRO_Z_OFFSET = PREFS.getFloat("z", 0);
   PREFS.end();
 
-  M5.Lcd.fillScreen(BLACK);
+  M5.Lcd.clear();
   M5.Lcd.setTextSize(2);
 }
 
@@ -45,6 +45,17 @@ void loop() {
                 GYRO_Y_OFFSET, GYRO_Z_OFFSET);
 
   if (M5.BtnA.wasPressed()) {
+    M5.Lcd.clear();
+    M5.Lcd.setTextDatum(MC_DATUM);
+    M5.Lcd.setTextSize(4);
+    M5.Lcd.drawString("3", 160, 120);
+    delay(1000);
+    M5.Lcd.drawString("2", 160, 120);
+    delay(1000);
+    M5.Lcd.drawString("1", 160, 120);
+    delay(1000);
+    M5.update();
+    M5.IMU.getGyroData(&gyro_x, &gyro_y, &gyro_z);  // ジャイロデータを取得
     GYRO_X_OFFSET = -gyro_x;
     GYRO_Y_OFFSET = -gyro_y;
     GYRO_Z_OFFSET = -gyro_z;
@@ -53,6 +64,11 @@ void loop() {
     PREFS.putFloat("y", GYRO_Y_OFFSET);
     PREFS.putFloat("z", GYRO_Z_OFFSET);
     PREFS.end();
+    M5.Lcd.clear();
+    M5.Lcd.setTextSize(2);
+    M5.Lcd.drawString("DONE CALIBRATION", 160, 120);
+    delay(1000);
+    M5.Lcd.clear();
   }
 
   delay(1);

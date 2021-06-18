@@ -13,7 +13,7 @@ const int TARGET_PORT = 10000;            // 受け取り側のポート
 
 void setup() {
   M5.begin();
-  M5.lcd.setTextSize(2);
+  M5.Lcd.setTextSize(2);
 
   // WiFi へ接続開始
   WiFi.begin(SSID.c_str(), PASSWORD.c_str());
@@ -22,9 +22,12 @@ void setup() {
     delay(500);
     M5.Lcd.print(".");
   }
+  M5.Lcd.println(" connected.");
   // 接続完了
 
-  M5.Lcd.println(" connected.");
+  delay(3000);
+  M5.Lcd.clear();
+  M5.Lcd.setCursor(0, 0);
   M5.Lcd.print("IP address: ");
   M5.Lcd.println(WiFi.localIP());
 }
@@ -35,7 +38,7 @@ void loop() {
   OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/time", second);
 
   // LCD 表示
-  M5.Lcd.setCursor(0, 120);
+  M5.Lcd.setCursor(0, 50);
   M5.Lcd.println("Send OSC");
   M5.Lcd.print("Target IP: ");
   M5.Lcd.println(TARGEET_IP.c_str());

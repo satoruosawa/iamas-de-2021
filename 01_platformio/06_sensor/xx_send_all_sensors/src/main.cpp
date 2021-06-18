@@ -30,7 +30,7 @@ void setup() {
   interval = 1000000 / update_freq;
   filter.begin(update_freq);
 
-  M5.lcd.setTextSize(1);
+  M5.Lcd.setTextSize(1);
   Wire.begin(21, 22, 400000);
   if (m5Bmm150.initialize() != BMM150_OK) {
     M5.Lcd.println("BMM150 initialization failed.");

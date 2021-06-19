@@ -55,6 +55,7 @@ void loop() {
     OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/pitch", pitch);
     OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/yaw", yaw);
 
+    // LCD表示
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.println("Send OSC");
     M5.Lcd.print("Target IP: ");

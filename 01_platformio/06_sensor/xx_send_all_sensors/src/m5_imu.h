@@ -25,6 +25,7 @@ class M5Imu {
   void getRollPitchYaw(float *roll, float *pitch, float *yaw);
   float getHeadDirection();
   float getActualFreq();
+  bool wasMeasured();
 
  private:
   void loadOffset();
@@ -48,6 +49,7 @@ class M5Imu {
   float mag_x_;
   float mag_y_;
   float mag_z_;
+  bool was_measured_;
 };
 
 #endif  // M5_IMU_H_

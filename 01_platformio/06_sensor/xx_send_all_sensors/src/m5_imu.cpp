@@ -13,6 +13,7 @@ M5Imu::M5Imu() {
   mag_x_ = 0;
   mag_y_ = 0;
   mag_z_ = 0;
+  was_measured_ = false;
 }
 
 void M5Imu::initialize(float target_freq) {
@@ -51,11 +52,12 @@ void M5Imu::saveOffset() {
 }
 
 void M5Imu::update() {
-  // TODO: optimise.
+  was_measured_ = false;
   unsigned long now = micros();
   if (now < prev_update_ + interval_) return;
   actual_freq_ = 1000000 / (float)(now - prev_update_);
   prev_update_ = now;
+  was_measured_ = true;
   M5.IMU.getAccelData(&acc_x_, &acc_y_, &acc_z_);
   M5.IMU.getGyroData(&gyro_x_, &gyro_y_, &gyro_z_);
   gyro_x_ += gyro_offset_x_;
@@ -94,3 +96,5 @@ void M5Imu::getRollPitchYaw(float *roll, float *pitch, float *yaw) {
 float M5Imu::getHeadDirection() { return m5_bmm150_.getHeadDirection(); }
 
 float M5Imu::getActualFreq() { return actual_freq_; }
+
+bool M5Imu::wasMeasured() { return was_measured_; }

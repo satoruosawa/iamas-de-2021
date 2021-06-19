@@ -34,26 +34,19 @@ void setup() {
 void loop() {
   M5_IMU.update();
   if (M5_IMU.wasMeasured()) {
-    float acc_x, acc_y, acc_z, gyro_x, gyro_y, gyro_z, mag_x, mag_y, mag_z,
-        roll, pitch, yaw;
-    M5_IMU.getAccelData(&acc_x, &acc_y, &acc_z);
-    M5_IMU.getGyroData(&gyro_x, &gyro_y, &gyro_z);
-    M5_IMU.getMagData(&mag_x, &mag_y, &mag_z);
-    M5_IMU.getRollPitchYaw(&roll, &pitch, &yaw);
-    float dir = M5_IMU.getHeadDirection();
-
     // OSC送信
     OscWiFi.update();
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/acceleration", acc_x, acc_y,
-                 acc_z);
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/gyro", gyro_x, gyro_y,
-                 gyro_z);
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/magnetic_field", mag_x,
-                 mag_y, mag_z);
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/direction", dir);
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/roll", roll);
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/pitch", pitch);
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/yaw", yaw);
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/acceleration",
+                 M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/gyro", M5_IMU.gyroX(),
+                 M5_IMU.gyroY(), M5_IMU.gyroZ());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/magnetic_field",
+                 M5_IMU.magX(), M5_IMU.magY(), M5_IMU.magZ());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/direction",
+                 M5_IMU.headDirection());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/roll", M5_IMU.roll());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/pitch", M5_IMU.pitch());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/yaw", M5_IMU.yaw());
 
     // LCD表示
     M5.Lcd.setCursor(0, 0);
@@ -63,15 +56,15 @@ void loop() {
     M5.Lcd.print(":");
     M5.Lcd.println(TARGET_PORT);
     M5.Lcd.println();
-    M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n", acc_x,
-                  acc_y, acc_z);
-    M5.Lcd.printf("Gyro:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n", gyro_x, gyro_y,
-                  gyro_z);
+    M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n",
+                  M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
+    M5.Lcd.printf("Gyro:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n", M5_IMU.gyroX(),
+                  M5_IMU.gyroY(), M5_IMU.gyroZ());
     M5.Lcd.printf("Magnetic Field:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n",
-                  mag_x, mag_y, mag_z);
-    M5.Lcd.printf("direction: %7.2f\n", dir);
+                  M5_IMU.magX(), M5_IMU.magY(), M5_IMU.magZ());
+    M5.Lcd.printf("direction: %7.2f\n", M5_IMU.headDirection());
     M5.Lcd.printf("Rotaion:\n   Roll: %7.2f\n  Pitch: %7.2f\n    Yaw: %7.2f\n",
-                  roll, pitch, yaw);
-    M5.Lcd.printf("Actual Frequency %4.1fHz", M5_IMU.getActualFreq());
+                  M5_IMU.roll(), M5_IMU.pitch(), M5_IMU.yaw());
+    M5.Lcd.printf("Actual Frequency %4.1fHz", M5_IMU.actualSampleRate());
   }
 }

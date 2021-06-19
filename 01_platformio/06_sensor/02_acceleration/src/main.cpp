@@ -10,7 +10,7 @@ M5Imu M5_IMU;
 
 void setup() {
   M5.begin();
-  M5_IMU.initialize(20);
+  M5_IMU.initialize();
   M5.Lcd.setTextSize(2);
   M5.Lcd.clear();
 }
@@ -24,5 +24,6 @@ void loop() {
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n", acc_x,
                   acc_y, acc_z);
+    M5.Lcd.printf("Actual Frequency %4.1fHz", M5_IMU.getActualFreq());
   }
 }

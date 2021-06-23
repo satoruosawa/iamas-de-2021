@@ -79,6 +79,12 @@ void M5Imu::update() {
   yaw_ = filter_.getYaw();
 }
 
+void M5Imu::calibrateBmm150(uint32_t calibrate_time) {
+  m5_bmm150_.calibrate(calibrate_time);
+}
+
+void M5Imu::calibrateMpu6886() { saveOffsetMpu6886(); }
+
 float M5Imu::actualSampleFrequency() { return actual_sample_frequency_; }
 float M5Imu::accX() { return acc_x_; }
 float M5Imu::accY() { return acc_y_; }

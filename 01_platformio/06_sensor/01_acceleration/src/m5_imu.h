@@ -19,6 +19,8 @@ class M5Imu {
   //   void calibrate(uint32_t calibrate_time);
   void initialize(float target_sample_frequency = 20);
   void update();
+  void calibrateBmm150(uint32_t calibrate_time);
+  void calibrateMpu6886();
   bool wasMeasured();
   float actualSampleFrequency();  // Hz
   float accX();

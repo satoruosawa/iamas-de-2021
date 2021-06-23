@@ -65,6 +65,7 @@ void loop() {
     M5.Lcd.printf("direction: %7.2f\n", M5_IMU.headDirection());
     M5.Lcd.printf("Rotaion:\n   Roll: %7.2f\n  Pitch: %7.2f\n    Yaw: %7.2f\n",
                   M5_IMU.roll(), M5_IMU.pitch(), M5_IMU.yaw());
-    M5.Lcd.printf("Actual Frequency %4.1fHz", M5_IMU.actualSampleRate());
+    M5.Lcd.printf("Actual Sample Freq. %4.1fHz",
+                  M5_IMU.actualSampleFrequency());
   }
 }

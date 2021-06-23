@@ -18,12 +18,10 @@ void setup() {
 void loop() {
   M5_IMU.update();
   if (M5_IMU.wasMeasured()) {
-    float acc_x, acc_y, acc_z;
-    M5_IMU.getAccelData(&acc_x, &acc_y, &acc_z);
-
     M5.Lcd.setCursor(0, 0);
-    M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n", acc_x,
-                  acc_y, acc_z);
-    M5.Lcd.printf("Actual Frequency %4.1fHz", M5_IMU.getActualFreq());
+    M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n",
+                  M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
+    M5.Lcd.printf("Actual Sample Freq. %4.1fHz",
+                  M5_IMU.actualSampleFrequency());
   }
 }

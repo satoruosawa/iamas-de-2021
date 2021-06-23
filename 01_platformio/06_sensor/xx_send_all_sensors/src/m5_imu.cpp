@@ -6,7 +6,7 @@ M5Imu::M5Imu()
       gyro_offset_z_(0),
       interval_(0),
       prev_update_(0),
-      actual_sample_rate_(0),
+      actual_sample_frequency_(0),
       acc_x_(0),
       acc_y_(0),
       acc_z_(0),
@@ -22,11 +22,11 @@ M5Imu::M5Imu()
       yaw_(0),
       was_measured_(false) {}
 
-void M5Imu::initialize(float target_sample_rate) {
+void M5Imu::initialize(float target_sample_frequency) {
   M5.Power.begin();
   M5.IMU.Init();
-  interval_ = 1000000 / target_sample_rate;
-  filter_.begin(target_sample_rate);
+  interval_ = 1000000 / target_sample_frequency;
+  filter_.begin(target_sample_frequency);
   Wire.begin(21, 22, 400000);
   if (m5_bmm150_.initialize() != BMM150_OK) {
     Serial.println("BMM150 initialization failed.");
@@ -34,10 +34,10 @@ void M5Imu::initialize(float target_sample_rate) {
       ;
   }
   m5_bmm150_.loadOffset();
-  loadOffset();
+  loadOffsetMpu6886();
 }
 
-void M5Imu::loadOffset() {
+void M5Imu::loadOffsetMpu6886() {
   if (prefs_.begin("mpu6886", true)) {
     gyro_offset_x_ = prefs_.getFloat("x", 0);
     gyro_offset_y_ = prefs_.getFloat("y", 0);
@@ -49,7 +49,7 @@ void M5Imu::loadOffset() {
   }
 }
 
-void M5Imu::saveOffset() {
+void M5Imu::saveOffsetMpu6886() {
   prefs_.begin("mpu6886", false);
   prefs_.putFloat("x", gyro_offset_x_);
   prefs_.putFloat("y", gyro_offset_y_);
@@ -61,7 +61,7 @@ void M5Imu::update() {
   was_measured_ = false;
   unsigned long now = micros();
   if (now < prev_update_ + interval_) return;
-  actual_sample_rate_ = 1000000 / (float)(now - prev_update_);
+  actual_sample_frequency_ = 1000000 / (float)(now - prev_update_);
   prev_update_ = now;
   was_measured_ = true;
   M5.IMU.getAccelData(&acc_x_, &acc_y_, &acc_z_);
@@ -79,7 +79,7 @@ void M5Imu::update() {
   yaw_ = filter_.getYaw();
 }
 
-float M5Imu::actualSampleRate() { return actual_sample_rate_; }
+float M5Imu::actualSampleFrequency() { return actual_sample_frequency_; }
 float M5Imu::accX() { return acc_x_; }
 float M5Imu::accY() { return acc_y_; }
 float M5Imu::accZ() { return acc_z_; }

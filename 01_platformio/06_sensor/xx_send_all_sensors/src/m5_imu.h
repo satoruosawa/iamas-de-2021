@@ -17,10 +17,10 @@ class M5Imu {
  public:
   M5Imu();
   //   void calibrate(uint32_t calibrate_time);
-  void initialize(float target_sample_rate = 20);
+  void initialize(float target_sample_frequency = 20);
   void update();
   bool wasMeasured();
-  float actualSampleRate();  // Hz
+  float actualSampleFrequency();  // Hz
   float accX();
   float accY();
   float accZ();
@@ -36,8 +36,8 @@ class M5Imu {
   float yaw();
 
  private:
-  void loadOffset();
-  void saveOffset();
+  void loadOffsetMpu6886();
+  void saveOffsetMpu6886();
   M5Bmm150 m5_bmm150_;
   Madgwick filter_;
   Preferences prefs_;
@@ -46,7 +46,7 @@ class M5Imu {
   float gyro_offset_z_;
   unsigned long interval_;
   unsigned long prev_update_;
-  float actual_sample_rate_;  // Hz
+  float actual_sample_frequency_;  // Hz
   float acc_x_;
   float acc_y_;
   float acc_z_;

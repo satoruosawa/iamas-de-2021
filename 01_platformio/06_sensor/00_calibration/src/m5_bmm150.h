@@ -1,10 +1,11 @@
-#ifndef M5_BMM150_H__
-#define M5_BMM150_H__
-#include <M5Stack.h>
+#ifndef M5_BMM150_H_
+#define M5_BMM150_H_
 
-#include "Preferences.h"
-#include "bmm150.h"
-#include "bmm150_defs.h"
+#include <M5Stack.h>
+#include <Preferences.h>
+
+#include "./bmm150.h"
+#include "./bmm150_defs.h"
 
 class M5Bmm150 {
  public:
@@ -30,4 +31,4 @@ class M5Bmm150 {
   struct bmm150_dev dev_;
 };
 
-#endif
+#endif  // M5_BMM150_H_

@@ -1,4 +1,4 @@
-#include "m5bmm150.h"
+#include "./m5_bmm150.h"
 
 int8_t M5Bmm150::i2cRead(uint8_t dev_id, uint8_t reg_addr, uint8_t *read_data,
                          uint16_t len) {

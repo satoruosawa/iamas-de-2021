@@ -19,7 +19,9 @@ class M5Bmm150 {
   void saveOffset();
   void update();
   bmm150_mag_data getRawData();
-  void getCalibratedData(float *mx, float *my, float *mz);
+  void getCalibratedData(float *mag_x, float *mag_y, float *mag_z);
+  void getOffsetData(float *mag_offset_x, float *mag_offset_y,
+                     float *mag_offset_z);
   float getHeadDirection();
 
  private:

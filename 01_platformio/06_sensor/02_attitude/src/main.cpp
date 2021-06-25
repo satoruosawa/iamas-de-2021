@@ -17,12 +17,8 @@ void loop() {
   M5_IMU.update();
   if (M5_IMU.wasMeasured()) {
     M5.Lcd.setCursor(0, 0);
-    M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n",
-                  M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
-    // Serial.print(M5_IMU.accX());
-    // Serial.print(",");
-    // Serial.print(M5_IMU.accY());
-    // Serial.print(",");
-    // Serial.println(M5_IMU.accZ());
+    M5.Lcd.printf("Atitude:\n   Roll: %7.2f\n  Pitch: %7.2f\n    Yaw: %7.2f\n",
+                  M5_IMU.roll(), M5_IMU.pitch(), M5_IMU.yaw());
+    M5.Lcd.printf("Sample Freq. %4.1fHz", M5_IMU.actualSampleFrequency());
   }
 }

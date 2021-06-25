@@ -37,8 +37,9 @@ void loop() {
   if (M5_IMU.wasMeasured()) {
     // OSC送信
     OscWiFi.update();
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/acceleration",
-                 M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/roll", M5_IMU.roll());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/pitch", M5_IMU.pitch());
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/yaw", M5_IMU.yaw());
 
     // LCD表示
     M5.Lcd.setCursor(0, 0);
@@ -48,7 +49,8 @@ void loop() {
     M5.Lcd.print(":");
     M5.Lcd.println(TARGET_PORT);
     M5.Lcd.println();
-    M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n",
-                  M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
+    M5.Lcd.printf("Atitude:\n   Roll: %7.2f\n  Pitch: %7.2f\n    Yaw: %7.2f\n",
+                  M5_IMU.roll(), M5_IMU.pitch(), M5_IMU.yaw());
+    M5.Lcd.printf("Sample Freq. %4.1fHz", M5_IMU.actualSampleFrequency());
   }
 }

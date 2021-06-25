@@ -17,9 +17,6 @@ M5Imu::M5Imu()
       mag_y_(0),
       mag_z_(0),
       head_direction_(0),
-      roll_(0),
-      pitch_(0),
-      yaw_(0),
       was_measured_(false) {}
 
 void M5Imu::initialize(float target_sample_frequency) {
@@ -35,6 +32,50 @@ void M5Imu::initialize(float target_sample_frequency) {
   }
   m5_bmm150_.loadOffset();
   loadOffsetMpu6886();
+}
+
+void M5Imu::update() {
+  was_measured_ = false;
+  unsigned long now = micros();
+  if (now < prev_update_ + interval_) return;
+  actual_sample_frequency_ = 1000000 / (float)(now - prev_update_);
+  prev_update_ = now;
+  was_measured_ = true;
+  M5.IMU.getAccelData(&acc_x_, &acc_y_, &acc_z_);
+  M5.IMU.getGyroData(&gyro_x_, &gyro_y_, &gyro_z_);
+  gyro_x_ += gyro_offset_x_;
+  gyro_y_ += gyro_offset_y_;
+  gyro_z_ += gyro_offset_z_;
+  m5_bmm150_.update();
+  m5_bmm150_.getCalibratedData(&mag_x_, &mag_y_, &mag_z_);
+  head_direction_ = m5_bmm150_.getHeadDirection();
+  filter_.update(gyro_x_, gyro_y_, gyro_z_, acc_x_, acc_y_, acc_z_, mag_x_,
+                 -mag_y_, mag_z_);
+}
+
+void M5Imu::calibrateBmm150(uint32_t calibrate_time) {
+  m5_bmm150_.calibrate(calibrate_time);
+}
+
+void M5Imu::calibrateMpu6886() {
+  float gyro_x, gyro_y, gyro_z;
+  M5.IMU.getGyroData(&gyro_x, &gyro_y, &gyro_z);
+  gyro_offset_x_ = -gyro_x;
+  gyro_offset_y_ = -gyro_y;
+  gyro_offset_z_ = -gyro_z;
+  saveOffsetMpu6886();
+}
+
+void M5Imu::getMagOffsetData(float *mag_offset_x, float *mag_offset_y,
+                             float *mag_offset_z) {
+  m5_bmm150_.getOffsetData(mag_offset_x, mag_offset_y, mag_offset_z);
+}
+
+void M5Imu::getGyroOffsetData(float *gyro_offset_x, float *gyro_offset_y,
+                              float *gyro_offset_z) {
+  *gyro_offset_x = gyro_offset_x_;
+  *gyro_offset_y = gyro_offset_y_;
+  *gyro_offset_z = gyro_offset_z_;
 }
 
 void M5Imu::loadOffsetMpu6886() {
@@ -57,34 +98,7 @@ void M5Imu::saveOffsetMpu6886() {
   prefs_.end();
 }
 
-void M5Imu::update() {
-  was_measured_ = false;
-  unsigned long now = micros();
-  if (now < prev_update_ + interval_) return;
-  actual_sample_frequency_ = 1000000 / (float)(now - prev_update_);
-  prev_update_ = now;
-  was_measured_ = true;
-  M5.IMU.getAccelData(&acc_x_, &acc_y_, &acc_z_);
-  M5.IMU.getGyroData(&gyro_x_, &gyro_y_, &gyro_z_);
-  gyro_x_ += gyro_offset_x_;
-  gyro_y_ += gyro_offset_y_;
-  gyro_z_ += gyro_offset_z_;
-  m5_bmm150_.update();
-  m5_bmm150_.getCalibratedData(&mag_x_, &mag_y_, &mag_z_);
-  head_direction_ = m5_bmm150_.getHeadDirection();
-  filter_.update(gyro_x_, gyro_y_, gyro_z_, acc_x_, acc_y_, acc_z_, mag_x_,
-                 -mag_y_, mag_z_);
-  roll_ = filter_.getRoll();
-  pitch_ = filter_.getPitch();
-  yaw_ = filter_.getYaw();
-}
-
-void M5Imu::calibrateBmm150(uint32_t calibrate_time) {
-  m5_bmm150_.calibrate(calibrate_time);
-}
-
-void M5Imu::calibrateMpu6886() { saveOffsetMpu6886(); }
-
+bool M5Imu::wasMeasured() { return was_measured_; }
 float M5Imu::actualSampleFrequency() { return actual_sample_frequency_; }
 float M5Imu::accX() { return acc_x_; }
 float M5Imu::accY() { return acc_y_; }
@@ -96,7 +110,6 @@ float M5Imu::magX() { return mag_x_; }
 float M5Imu::magY() { return mag_y_; }
 float M5Imu::magZ() { return mag_z_; }
 float M5Imu::headDirection() { return head_direction_; }
-float M5Imu::roll() { return roll_; }
-float M5Imu::pitch() { return pitch_; }
-float M5Imu::yaw() { return yaw_; }
-bool M5Imu::wasMeasured() { return was_measured_; }
+float M5Imu::roll() { return filter_.getRoll(); }
+float M5Imu::pitch() { return filter_.getPitch(); }
+float M5Imu::yaw() { return filter_.getYaw(); }

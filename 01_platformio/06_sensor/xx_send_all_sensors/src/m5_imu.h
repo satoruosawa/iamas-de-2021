@@ -21,6 +21,10 @@ class M5Imu {
   void update();
   void calibrateBmm150(uint32_t calibrate_time);
   void calibrateMpu6886();
+  void getMagOffsetData(float *mag_offset_x, float *mag_offset_y,
+                        float *mag_offset_z);
+  void getGyroOffsetData(float *gyro_offset_x, float *gyro_offset_y,
+                         float *gyro_offset_z);
   bool wasMeasured();
   float actualSampleFrequency();  // Hz
   float accX();
@@ -59,9 +63,6 @@ class M5Imu {
   float mag_y_;
   float mag_z_;
   float head_direction_;
-  float roll_;
-  float pitch_;
-  float yaw_;
   bool was_measured_;
 };
 

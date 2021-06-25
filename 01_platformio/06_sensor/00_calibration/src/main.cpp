@@ -1,6 +1,8 @@
+#define M5STACK_MPU6886
+
 #include <M5Stack.h>
 
-#include "./m5_imu.h"  // 磁気センサーライブラリを使うための宣言
+#include "./m5_imu.h"  // センサーライブラリを使うための宣言
 #include "./ui.h"
 
 M5Imu M5_IMU;  // センサーライブラリを使うための定義

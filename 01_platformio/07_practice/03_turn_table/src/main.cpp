@@ -41,20 +41,14 @@ void loop() {
     OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/pitch", M5_IMU.pitch());
     OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/yaw", M5_IMU.yaw());
 
-    int center_x = 160;
-    int center_y = 120;
-    float angle = M5_IMU.yaw() * M_PI / 180;
-    float x1 = center_x + 100 * cos(angle);
-    float y1 = center_y + 100 * sin(angle);
-    M5.Lcd.fillCircle(center_x, center_y, 102, BLACK);
     if (M5_IMU.yaw() < 90) {
-      M5.Lcd.drawLine(center_x, center_y, x1, y1, WHITE);
+      M5.Lcd.fillCircle(160, 120, 50, WHITE);
     } else if (M5_IMU.yaw() >= 90 && M5_IMU.yaw() < 180) {
-      M5.Lcd.drawLine(center_x, center_y, x1, y1, RED);
+      M5.Lcd.fillCircle(160, 120, 50, RED);
     } else if (M5_IMU.yaw() >= 180 && M5_IMU.yaw() < 270) {
-      M5.Lcd.drawLine(center_x, center_y, x1, y1, GREEN);
+      M5.Lcd.fillCircle(160, 120, 50, GREEN);
     } else {
-      M5.Lcd.drawLine(center_x, center_y, x1, y1, BLUE);
+      M5.Lcd.fillCircle(160, 120, 50, BLUE);
     }
   }
 }

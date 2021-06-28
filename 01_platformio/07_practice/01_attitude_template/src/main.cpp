@@ -49,8 +49,15 @@ void loop() {
     M5.Lcd.print(":");
     M5.Lcd.println(TARGET_PORT);
     M5.Lcd.println();
-    M5.Lcd.printf("Atitude:\n   Roll: %7.2f\n  Pitch: %7.2f\n    Yaw: %7.2f\n",
-                  M5_IMU.roll(), M5_IMU.pitch(), M5_IMU.yaw());
-    M5.Lcd.printf("Sample Freq. %4.1fHz", M5_IMU.actualSampleFrequency());
+    M5.Lcd.println("Atitude");
+    M5.Lcd.print("Roll: ");
+    M5.Lcd.print(M5_IMU.roll());
+    M5.Lcd.print("   \nPitch: ");
+    M5.Lcd.print(M5_IMU.pitch());
+    M5.Lcd.print("   \nYaw: ");
+    M5.Lcd.print(M5_IMU.yaw());
+    M5.Lcd.print("   \nSample Freq.: ");
+    M5.Lcd.print(M5_IMU.actualSampleFrequency());
+    M5.Lcd.println("Hz   ");
   }
 }

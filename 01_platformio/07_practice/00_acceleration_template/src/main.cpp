@@ -47,7 +47,13 @@ void loop() {
     M5.Lcd.print(":");
     M5.Lcd.println(TARGET_PORT);
     M5.Lcd.println();
-    M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n",
-                  M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
+    M5.Lcd.println("Acceleration");
+    M5.Lcd.print("X: ");
+    M5.Lcd.print(M5_IMU.accX());
+    M5.Lcd.print("   \nY: ");
+    M5.Lcd.print(M5_IMU.accY());
+    M5.Lcd.print("   \nZ: ");
+    M5.Lcd.print(M5_IMU.accZ());
+    M5.Lcd.println("   ");
   }
 }

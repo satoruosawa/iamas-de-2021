@@ -1,4 +1,4 @@
-#define M5STACK_MPU6886
+#define M5STACK_MPU6886  // MPU6886というセンサーを使うことを宣言
 
 #include <M5Stack.h>
 
@@ -14,11 +14,17 @@ void setup() {
 }
 
 void loop() {
-  M5_IMU.update();
-  if (M5_IMU.wasMeasured()) {
+  M5_IMU.update();             // センサーライブラリの更新
+  if (M5_IMU.wasMeasured()) {  // 20Hzでセンサーデータを読み取る
     M5.Lcd.setCursor(0, 0);
-    M5.Lcd.printf("Acceleration:\n  X: %7.2f\n  Y: %7.2f\n  Z: %7.2f\n",
-                  M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
+    M5.Lcd.println("Acceleration");
+    M5.Lcd.print("X: ");
+    M5.Lcd.print(M5_IMU.accX());
+    M5.Lcd.print("   \nY: ");
+    M5.Lcd.print(M5_IMU.accY());
+    M5.Lcd.print("   \nZ: ");
+    M5.Lcd.print(M5_IMU.accZ());
+    M5.Lcd.println("   ");
     // Serial.print(M5_IMU.accX());
     // Serial.print(",");
     // Serial.print(M5_IMU.accY());

@@ -35,7 +35,7 @@ void setup() {
 void loop() {
   M5.update();
   if (M5.BtnA.wasPressed()) {
-    count++;
+    count++;           // ボタンを押す度にcountを1追加
     OscWiFi.update();  // OSCを使うときは、この行を追加
     OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/btn_a", count);
     // LCD 表示

@@ -40,13 +40,13 @@ void loop() {
     OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/yaw", M5_IMU.yaw());
 
     if (M5_IMU.yaw() < 90) {
-      M5.Lcd.fillCircle(160, 120, 50, WHITE);
+      M5.Lcd.fillCircle(160, 120, 100, WHITE);
     } else if (M5_IMU.yaw() >= 90 && M5_IMU.yaw() < 180) {
-      M5.Lcd.fillCircle(160, 120, 50, RED);
+      M5.Lcd.fillCircle(160, 120, 100, RED);
     } else if (M5_IMU.yaw() >= 180 && M5_IMU.yaw() < 270) {
-      M5.Lcd.fillCircle(160, 120, 50, GREEN);
+      M5.Lcd.fillCircle(160, 120, 100, GREEN);
     } else {
-      M5.Lcd.fillCircle(160, 120, 50, BLUE);
+      M5.Lcd.fillCircle(160, 120, 100, BLUE);
     }
   }
 }

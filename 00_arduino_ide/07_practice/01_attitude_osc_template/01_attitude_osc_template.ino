@@ -16,7 +16,7 @@ void setup() {
   M5.begin();
   M5_IMU.initialize(20);
 
-  M5.Lcd.setTextSize(1);
+  M5.Lcd.setTextSize(2);
   delay(100);
   WiFi.begin(SSID.c_str(), PASSWORD.c_str());
   M5.Lcd.print("Connecting to the WiFi AP: " + SSID);
@@ -25,9 +25,8 @@ void setup() {
     M5.Lcd.print(".");
   }
   M5.Lcd.println(" connected.");
-  delay(100);
+  delay(1000);
 
-  M5.Lcd.setTextSize(2);
   M5.Lcd.clear();
 }
 

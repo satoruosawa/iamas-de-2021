@@ -38,9 +38,7 @@ void loop() {
     OscWiFi.update();
     OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/acceleration",
                  M5_IMU.accX(), M5_IMU.accY(), M5_IMU.accZ());
-    float acc_max = max(abs(M5_IMU.accX()), abs(M5_IMU.accY()));
-    acc_max = max(acc_max, abs(M5_IMU.accZ()));
-    if (acc_max > 2.0) {
+    if (M5_IMU.accZ() > 1.2) {
       M5.Lcd.fillRect(0, 0, 320, 240, WHITE);
     } else {
       M5.Lcd.fillRect(0, 0, 320, 240, BLACK);

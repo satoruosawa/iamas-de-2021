@@ -2,8 +2,8 @@
 #include <WiFi.h>
 
 // Wi-Fiの設定
-const String SSID = WIFI_SSID;          // 各自のSSIDに変更 "ssid"
-const String PASSWORD = WIFI_PASSWORD;  // 各自のWiFiパスワードに変更 "pass"
+const String SSID = WIFI_SSID;  // 各自のSSIDに変更 "ssid"
+const String PASSWORD = WIFI_PASSWORD;  // 各自のWiFiパスワードに変更 "password"
 
 void setup() {
   M5.begin();
@@ -11,7 +11,7 @@ void setup() {
 
   // WiFi へ接続開始
   WiFi.begin(SSID.c_str(), PASSWORD.c_str());
-  M5.Lcd.printf("Connecting to the WiFi AP: %s ", SSID.c_str());
+  M5.Lcd.print("Connecting to the WiFi AP: " + SSID);
   while (WiFi.status() != WL_CONNECTED) {
     // 接続完了までループ
     delay(500);

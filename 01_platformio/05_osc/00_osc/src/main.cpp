@@ -17,7 +17,7 @@ void setup() {
 
   // WiFi へ接続開始
   WiFi.begin(SSID.c_str(), PASSWORD.c_str());
-  M5.Lcd.printf("Connecting to the WiFi AP: %s ", SSID.c_str());
+  M5.Lcd.print("Connecting to the WiFi AP: " + SSID);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     M5.Lcd.print(".");
@@ -34,8 +34,9 @@ void setup() {
 
 void loop() {
   OscWiFi.update();  // OSCを使うときは、この行を追加
-  float second = millis() / 1000.0;
-  OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/time", second);
+  float second = millis() / 1000.0;  // ミリ秒から秒に変換
+  OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/time",
+               second);  // OSCデータを送信
 
   // LCD 表示
   M5.Lcd.setCursor(0, 50);

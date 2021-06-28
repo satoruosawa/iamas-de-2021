@@ -9,7 +9,7 @@ const String PASSWORD = WIFI_PASSWORD;  // 各自のWiFiパスワードに変更
 const String TARGEET_IP = PC_IP_ADDRESS;  // macのIPアドレスに変更 "0.0.0.0"
 const int TARGET_PORT = 10000;            // 受け取り側のポート
 
-int pressed_count = 0;
+int count = 0;
 
 void setup() {
   M5.begin();
@@ -17,7 +17,7 @@ void setup() {
 
   // WiFi へ接続開始
   WiFi.begin(SSID.c_str(), PASSWORD.c_str());
-  M5.Lcd.printf("Connecting to the WiFi AP: %s ", SSID.c_str());
+  M5.Lcd.print("Connecting to the WiFi AP: " + SSID);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     M5.Lcd.print(".");
@@ -35,9 +35,9 @@ void setup() {
 void loop() {
   M5.update();
   if (M5.BtnA.wasPressed()) {
-    pressed_count++;
+    count++;
     OscWiFi.update();  // OSCを使うときは、この行を追加
-    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/btn_a", pressed_count);
+    OscWiFi.send(TARGEET_IP.c_str(), TARGET_PORT, "/btn_a", count);
     // LCD 表示
     M5.Lcd.setCursor(0, 50);
     M5.Lcd.println("Send OSC");
@@ -46,7 +46,7 @@ void loop() {
     M5.Lcd.print("Target Port: ");
     M5.Lcd.println(TARGET_PORT);
     M5.Lcd.print("Count: ");
-    M5.Lcd.println(pressed_count);
+    M5.Lcd.println(count);
   }
   delay(10);
 }

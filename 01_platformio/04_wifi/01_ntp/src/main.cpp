@@ -3,9 +3,9 @@
 
 #include "./config.h"
 
-const String SSID = WIFI_SSID;          // "xxxx"
-const String PASSWORD = WIFI_PASSWORD;  // "xxxx"
-const String NTP_SERVER = "ntp.nict.jp";
+const String SSID = WIFI_SSID;            // "xxxx"
+const String PASSWORD = WIFI_PASSWORD;    // "xxxx"
+const String NTP_SERVER = "ntp.nict.jp";  // NTPサーバーのアドレス
 
 const long GMT_OFFSET_SEC = 9 * 3600;  // +9hours
 const int DAYLIGHT_OFFSET_SEC = 0;     // summer time offset
@@ -16,7 +16,7 @@ void setup() {
 
   // WiFi へ接続開始
   WiFi.begin(SSID.c_str(), PASSWORD.c_str());
-  M5.Lcd.printf("Connecting to the WiFi AP: %s ", SSID.c_str());
+  M5.Lcd.print("Connecting to the WiFi AP: " + SSID);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     M5.Lcd.print(".");

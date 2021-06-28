@@ -15,19 +15,19 @@ const int TARGET_PORT = 10000;
 void setup() {
   M5.begin();
   M5_IMU.initialize(20);
+  
+  M5.Lcd.setTextSize(2);
 
-  M5.Lcd.setTextSize(1);
   delay(100);
   WiFi.begin(SSID.c_str(), PASSWORD.c_str());
-  M5.Lcd.printf("Connecting to the WiFi AP: %s ", SSID.c_str());
+  M5.Lcd.print("Connecting to the WiFi AP: " + SSID);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     M5.Lcd.print(".");
   }
   M5.Lcd.println(" connected.");
-  delay(100);
+  delay(1000);
 
-  M5.Lcd.setTextSize(2);
   M5.Lcd.clear();
 }
 

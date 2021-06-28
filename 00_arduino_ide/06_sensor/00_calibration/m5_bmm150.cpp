@@ -1,4 +1,4 @@
-#include "m5bmm150.h"
+#include "./m5_bmm150.h"
 
 int8_t M5Bmm150::i2cRead(uint8_t dev_id, uint8_t reg_addr, uint8_t *read_data,
                          uint16_t len) {
@@ -103,10 +103,17 @@ void M5Bmm150::update() { bmm150_read_mag_data(&dev_); }
 
 bmm150_mag_data M5Bmm150::getRawData() { return dev_.data; }
 
-void M5Bmm150::getCalibratedData(float *mx, float *my, float *mz) {
-  *mx = dev_.data.x - mag_offset_.x;
-  *my = dev_.data.y - mag_offset_.y;
-  *mz = dev_.data.z - mag_offset_.z;
+void M5Bmm150::getCalibratedData(float *mag_x, float *mag_y, float *mag_z) {
+  *mag_x = dev_.data.x - mag_offset_.x;
+  *mag_y = dev_.data.y - mag_offset_.y;
+  *mag_z = dev_.data.z - mag_offset_.z;
+}
+
+void M5Bmm150::getOffsetData(float *mag_offset_x, float *mag_offset_y,
+                             float *mag_offset_z) {
+  *mag_offset_x = mag_offset_.x;
+  *mag_offset_y = mag_offset_.y;
+  *mag_offset_z = mag_offset_.z;
 }
 
 float M5Bmm150::getHeadDirection() {

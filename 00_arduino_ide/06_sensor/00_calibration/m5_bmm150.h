@@ -1,10 +1,11 @@
-#ifndef M5_BMM150_H__
-#define M5_BMM150_H__
-#include <M5Stack.h>
+#ifndef M5_BMM150_H_
+#define M5_BMM150_H_
 
-#include "Preferences.h"
-#include "bmm150.h"
-#include "bmm150_defs.h"
+#include <M5Stack.h>
+#include <Preferences.h>
+
+#include "./bmm150.h"
+#include "./bmm150_defs.h"
 
 class M5Bmm150 {
  public:
@@ -18,7 +19,9 @@ class M5Bmm150 {
   void saveOffset();
   void update();
   bmm150_mag_data getRawData();
-  void getCalibratedData(float *mx, float *my, float *mz);
+  void getCalibratedData(float *mag_x, float *mag_y, float *mag_z);
+  void getOffsetData(float *mag_offset_x, float *mag_offset_y,
+                     float *mag_offset_z);
   float getHeadDirection();
 
  private:
@@ -30,4 +33,4 @@ class M5Bmm150 {
   struct bmm150_dev dev_;
 };
 
-#endif
+#endif  // M5_BMM150_H_

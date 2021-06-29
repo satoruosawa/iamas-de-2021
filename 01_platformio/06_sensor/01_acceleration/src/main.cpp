@@ -8,7 +8,7 @@ M5Imu M5_IMU;  // センサーライブラリを使うための定義
 
 void setup() {
   M5.begin();
-  M5_IMU.initialize();  // センサーライブラリの初期化
+  M5_IMU.initialize();  // センサーライブラリの初期化、M5.begin()の直後に行う
   M5.Lcd.setTextSize(2);
   M5.Lcd.clear();
 }

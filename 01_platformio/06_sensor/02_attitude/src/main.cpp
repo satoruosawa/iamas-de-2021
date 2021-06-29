@@ -14,6 +14,7 @@ void setup() {
 }
 
 void loop() {
+  // センサーの測定精度を下げないために、loop内では極力delay関数を使わない
   M5_IMU.update();
   if (M5_IMU.wasMeasured()) {
     M5.Lcd.setCursor(0, 0);
